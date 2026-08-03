@@ -6,19 +6,22 @@
 <title>Vessel Proserpina</title>
 <meta name="description" content="A grimdark sci-fi mystery survival game. 2126. A mining vessel went dark mid drive-trial. The team sent to secure her went silent. You are the follow-up.">
 <style>
-  /* Palette: hull steel (blue-cast darks), oxide = paint on the hull
-     (headings, stencil, actions), phosphor = live console data ONLY.
-     Type: display = stencil/hull, mono = ship systems, sans = human voice. */
+  /* Palette: warm haunted-industrial blacks (Event Horizon murk), oxide = paint
+     on the hull (headings, stencil, actions), phosphor = live console/CCTV data
+     ONLY, blood = reserved for NO CONTACT and the fine print. Nothing else
+     gets to be red. Type: display = stencil/hull, mono = ship systems,
+     sans = human voice. */
   :root {
-    --hull: #0e1116;
-    --plate: #151920;
-    --seam: #272e38;
-    --ash: #b9bfc7;
-    --bone: #dde1e6;
-    --dust: #6d747e;
-    --oxide: #c05f35;
-    --oxide-dim: #7a4527;
-    --phosphor: #8fb7a1;
+    --hull: #0b0a0a;
+    --plate: #121010;
+    --seam: #272220;
+    --ash: #b3aea6;
+    --bone: #d8d3c9;
+    --dust: #6f6a62;
+    --oxide: #b5512c;
+    --oxide-dim: #6f3a22;
+    --phosphor: #7fa48a;
+    --blood: #9c2a1c;
     --display: "Arial Black", "Segoe UI Black", "Helvetica Neue", sans-serif;
     --mono: Consolas, "SF Mono", Menlo, monospace;
     --sans: "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -33,19 +36,56 @@
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
+  /* film grain over everything, including the lightbox */
+  body::after {
+    content: "";
+    position: fixed; inset: 0; z-index: 50;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    opacity: 0.05;
+  }
+  ::selection { background: var(--blood); color: var(--bone); }
   .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
   a:focus-visible, .btn:focus-visible { outline: 2px solid var(--oxide); outline-offset: 3px; }
 
   /* ---- hero: the registry plate ---- */
   header {
+    position: relative;
     min-height: 92vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-bottom: 1px solid var(--seam);
     background:
-      radial-gradient(ellipse 100% 55% at 50% 115%, #171410 0%, transparent 65%),
+      radial-gradient(ellipse 130% 90% at 50% 50%, transparent 45%, rgba(0,0,0,0.55) 100%),
+      radial-gradient(ellipse 90% 60% at 50% 118%, #1c0f08 0%, transparent 62%),
       var(--hull);
+    overflow: hidden;
+  }
+  header .wrap { position: relative; z-index: 2; }
+  /* falling ash — sparse, slow, deniable */
+  .ashfield { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .ashfield span {
+    position: absolute; top: -2%;
+    width: 2px; height: 2px; border-radius: 50%;
+    background: #8e8a83; opacity: 0;
+    animation: fall linear infinite;
+  }
+  .ashfield span:nth-child(1)  { left: 8%;  animation-duration: 26s; animation-delay: 0s; }
+  .ashfield span:nth-child(2)  { left: 21%; animation-duration: 19s; animation-delay: 7s; }
+  .ashfield span:nth-child(3)  { left: 33%; animation-duration: 31s; animation-delay: 3s; }
+  .ashfield span:nth-child(4)  { left: 42%; animation-duration: 22s; animation-delay: 12s; }
+  .ashfield span:nth-child(5)  { left: 55%; animation-duration: 28s; animation-delay: 5s; }
+  .ashfield span:nth-child(6)  { left: 63%; animation-duration: 17s; animation-delay: 9s; }
+  .ashfield span:nth-child(7)  { left: 74%; animation-duration: 24s; animation-delay: 1s; }
+  .ashfield span:nth-child(8)  { left: 82%; animation-duration: 33s; animation-delay: 15s; }
+  .ashfield span:nth-child(9)  { left: 91%; animation-duration: 21s; animation-delay: 6s; }
+  .ashfield span:nth-child(10) { left: 48%; animation-duration: 35s; animation-delay: 18s; }
+  @keyframes fall {
+    0%   { transform: translateY(-2vh) translateX(0); opacity: 0; }
+    8%   { opacity: 0.3; }
+    85%  { opacity: 0.18; }
+    100% { transform: translateY(96vh) translateX(-2.5vw); opacity: 0; }
   }
   .eyebrow {
     font-family: var(--mono);
@@ -63,6 +103,7 @@
     letter-spacing: 0.02em;
     color: var(--bone);
     text-transform: uppercase;
+    text-shadow: 0 0 34px rgba(0, 0, 0, 0.65);
   }
   h1 .ship { color: var(--oxide); }
   .registry-bar {
@@ -76,8 +117,19 @@
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--oxide);
+    background: rgba(0, 0, 0, 0.3);
   }
-  .tagline { margin-top: 30px; max-width: 540px; color: var(--dust); font-size: 16px; }
+  .registry-bar .alert { color: var(--blood); animation: breathe 4.5s ease-in-out infinite; }
+  @keyframes breathe { 50% { opacity: 0.5; } }
+  .classline {
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dust);
+  }
+  .tagline { margin-top: 26px; max-width: 540px; color: var(--dust); font-size: 16px; }
   .hero-cta { margin-top: 40px; }
 
   /* telemetry: phosphor is reserved for live ship data — nothing else uses it */
@@ -96,7 +148,8 @@
   @keyframes pulse { to { visibility: hidden; } }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .telemetry::after { animation: none; }
+    .telemetry::after, .registry-bar .alert { animation: none; }
+    .ashfield { display: none; }
   }
 
   /* ---- sections as ship's-document fields ---- */
@@ -139,42 +192,54 @@
   .facts span { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dust); }
   .facts span::before { content: "■ "; color: var(--oxide-dim); font-size: 9px; vertical-align: 2px; }
 
-  /* ---- media placeholders ---- */
+  /* ---- recovered footage: CCTV register ---- */
   .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-  .frame {
+  .media-grid .wide { grid-column: 1 / -1; }
+  .cam { position: relative; margin: 0; }
+  .cam img, .media-grid video {
+    width: 100%;
     aspect-ratio: 16 / 9;
-    background: var(--plate);
+    object-fit: cover;
     border: 1px solid var(--seam);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--mono);
-    color: var(--dust);
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
+    display: block;
+    cursor: zoom-in;
+    filter: saturate(0.72) contrast(1.06);
+    transition: filter 0.25s;
   }
-  .frame.wide { grid-column: 1 / -1; }
-  /* When real media lands: replace a .frame div with
-     <img src="..." alt="..."> or a <video> — styles below cover both. */
-  .media-grid img, .media-grid video { width: 100%; aspect-ratio: 16/9; object-fit: cover; border: 1px solid var(--seam); display: block; }
-  .media-grid img.wide { grid-column: 1 / -1; }
-  .media-grid img { cursor: zoom-in; }
-  .media-grid img:focus-visible { outline: 2px solid var(--oxide); outline-offset: 3px; }
+  .cam:hover img { filter: saturate(0.95) contrast(1.06); }
+  .cam img:focus-visible { outline: 2px solid var(--oxide); outline-offset: 3px; }
+  /* interlace scanlines over the feed */
+  .cam::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0 1px, transparent 1px 3px);
+    pointer-events: none;
+  }
+  /* camera OSD burned into the frame */
+  .cam figcaption {
+    position: absolute; left: 10px; bottom: 10px; z-index: 1;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--phosphor);
+    background: rgba(4, 4, 3, 0.55);
+    padding: 4px 9px;
+  }
 
   /* ---- lightbox ---- */
   .lightbox {
     position: fixed; inset: 0; z-index: 10;
     display: none; flex-direction: column; align-items: center; justify-content: center;
     gap: 16px; padding: 4vh 4vw;
-    background: rgba(10, 13, 17, 0.95);
+    background: rgba(8, 7, 6, 0.96);
     cursor: zoom-out;
   }
   .lightbox.open { display: flex; }
   .lightbox img { max-width: 100%; max-height: 84vh; border: 1px solid var(--seam); }
   .lightbox .cap {
     font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--dust); text-align: center;
+    text-transform: uppercase; color: var(--phosphor); text-align: center;
   }
 
   /* ---- follow ---- */
@@ -199,21 +264,27 @@
   footer {
     padding: 48px 0 64px;
     font-family: var(--mono);
-    color: #4a505a;
+    color: #57524b;
     font-size: 11px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     line-height: 2.2;
   }
+  footer .violation { color: #4a3430; }
 </style>
 </head>
 <body>
 
 <header>
+  <div class="ashfield" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
   <div class="wrap">
     <div class="eyebrow">Halvorsen-Erebus Logistics Ltd · Deep-Belt Mining Division</div>
     <h1>Vessel<br><span class="ship">Proserpina</span></h1>
-    <div class="registry-bar">HCV Proserpina · Registry 2666 · Status: No Contact</div>
+    <div class="registry-bar">HCV Proserpina · Registry 2666 · Status: <span class="alert">No Contact</span></div>
+    <div class="classline">Incident file 2666-A · Classification: Restricted · Distribution: Assessment personnel only</div>
     <p class="tagline">A grimdark sci-fi mystery survival game. In development for PC.</p>
     <div class="hero-cta">
       <a class="btn" href="#follow">Follow the investigation</a>
@@ -265,11 +336,23 @@
   <div class="wrap">
     <div class="label">Recovered Footage</div>
     <div class="media-grid">
-      <!-- Wide slot holds a screenshot until the trailer exists: swap for <video controls poster="..."> -->
-      <img class="wide" src="screenshots/crew.jpg" alt="A crew member at the service bay wall" tabindex="0">
-      <img src="screenshots/core.jpg" alt="The Engineering Core monitoring station — screens still on, chair empty" tabindex="0">
-      <img src="screenshots/catwalk.jpg" alt="A single powered compartment glowing across the dark sub-deck catwalks" tabindex="0">
-      <img src="screenshots/shaft.jpg" alt="A red conduit descending into the lower-deck service shaft" tabindex="0">
+      <!-- Wide slot holds a feed until the trailer exists: swap for <video controls poster="..."> -->
+      <figure class="cam wide">
+        <img src="screenshots/crew.jpg" alt="A crew member at the service bay wall" tabindex="0">
+        <figcaption>CAM 04 // SERVICE BAY — LAST CREW CONTACT</figcaption>
+      </figure>
+      <figure class="cam">
+        <img src="screenshots/core.jpg" alt="The Engineering Core monitoring station — screens still on, chair empty" tabindex="0">
+        <figcaption>CAM 11 // ENGINEERING CORE — UNMANNED</figcaption>
+      </figure>
+      <figure class="cam">
+        <img src="screenshots/catwalk.jpg" alt="A single powered compartment glowing across the dark sub-deck catwalks" tabindex="0">
+        <figcaption>CAM 17 // SUB-DECK — SECTION LIT, UNSCHEDULED</figcaption>
+      </figure>
+      <figure class="cam">
+        <img src="screenshots/shaft.jpg" alt="A red conduit descending into the lower-deck service shaft" tabindex="0">
+        <figcaption>CAM 09 // SERVICE SHAFT B — FEED DEGRADED</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -286,7 +369,8 @@
 <footer>
   <div class="wrap">
     HCV Proserpina · Registry 2666 · Operated under contract by Halvorsen-Erebus Logistics Ltd<br>
-    Vessel Proserpina © 2026 · An independent production · <a href="mailto:contact@vesselproserpina.com">contact@vesselproserpina.com</a>
+    Vessel Proserpina © 2026 · An independent production · <a href="mailto:contact@vesselproserpina.com">contact@vesselproserpina.com</a><br>
+    <span class="violation">Unauthorized access to incident materials constitutes a Class-C contractual violation · HEL-SEC/2666-A</span>
   </div>
 </footer>
 
@@ -300,7 +384,10 @@
   const lbImg = lb.querySelector('img');
   const lbCap = lb.querySelector('.cap');
   const open = (img) => {
-    lbImg.src = img.src; lbImg.alt = img.alt; lbCap.textContent = img.alt;
+    const fig = img.closest('figure');
+    const osd = fig && fig.querySelector('figcaption');
+    lbImg.src = img.src; lbImg.alt = img.alt;
+    lbCap.textContent = osd ? osd.textContent : img.alt;
     lb.classList.add('open'); document.body.style.overflow = 'hidden';
   };
   const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
