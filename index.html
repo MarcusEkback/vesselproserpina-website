@@ -159,6 +159,23 @@
      <img src="..." alt="..."> or a <video> — styles below cover both. */
   .media-grid img, .media-grid video { width: 100%; aspect-ratio: 16/9; object-fit: cover; border: 1px solid var(--seam); display: block; }
   .media-grid img.wide { grid-column: 1 / -1; }
+  .media-grid img { cursor: zoom-in; }
+  .media-grid img:focus-visible { outline: 2px solid var(--oxide); outline-offset: 3px; }
+
+  /* ---- lightbox ---- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 10;
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; padding: 4vh 4vw;
+    background: rgba(10, 13, 17, 0.95);
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 84vh; border: 1px solid var(--seam); }
+  .lightbox .cap {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--dust); text-align: center;
+  }
 
   /* ---- follow ---- */
   .btn {
@@ -249,10 +266,10 @@
     <div class="label">Recovered Footage</div>
     <div class="media-grid">
       <!-- Wide slot holds a screenshot until the trailer exists: swap for <video controls poster="..."> -->
-      <img class="wide" src="screenshots/catwalk.jpg" alt="A single powered compartment glowing across the dark sub-deck catwalks">
-      <img src="screenshots/core.jpg" alt="The Engineering Core monitoring station — screens still on, chair empty">
-      <img src="screenshots/crew.jpg" alt="A crew member at the service bay wall">
-      <img src="screenshots/shaft.jpg" alt="A red conduit descending into the lower-deck service shaft">
+      <img class="wide" src="screenshots/crew.jpg" alt="A crew member at the service bay wall" tabindex="0">
+      <img src="screenshots/core.jpg" alt="The Engineering Core monitoring station — screens still on, chair empty" tabindex="0">
+      <img src="screenshots/catwalk.jpg" alt="A single powered compartment glowing across the dark sub-deck catwalks" tabindex="0">
+      <img src="screenshots/shaft.jpg" alt="A red conduit descending into the lower-deck service shaft" tabindex="0">
     </div>
   </div>
 </section>
@@ -272,6 +289,28 @@
     Vessel Proserpina © 2026 · An independent production · <a href="mailto:contact@vesselproserpina.com">contact@vesselproserpina.com</a>
   </div>
 </footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot viewer">
+  <img alt="">
+  <div class="cap"></div>
+</div>
+
+<script>
+  const lb = document.getElementById('lightbox');
+  const lbImg = lb.querySelector('img');
+  const lbCap = lb.querySelector('.cap');
+  const open = (img) => {
+    lbImg.src = img.src; lbImg.alt = img.alt; lbCap.textContent = img.alt;
+    lb.classList.add('open'); document.body.style.overflow = 'hidden';
+  };
+  const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+  document.querySelectorAll('.media-grid img').forEach((img) => {
+    img.addEventListener('click', () => open(img));
+    img.addEventListener('keydown', (e) => { if (e.key === 'Enter') open(img); });
+  });
+  lb.addEventListener('click', close);
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+</script>
 
 </body>
 </html>
