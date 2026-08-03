@@ -64,53 +64,48 @@
     overflow: hidden;
   }
   header .wrap { position: relative; z-index: 2; }
-  /* falling ash — sparse, slow, deniable */
-  .ashfield { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-  /* each flake: the span falls, its ::before sways and tumbles */
-  .ashfield span {
-    position: absolute; top: -2%;
-    width: 4px; height: 5px;
-    opacity: 0;
-    animation: fall linear infinite;
+  /* starfield — the ship adrift in the deep belt. Three layers:
+     dim field, brighter scatter, and a few slow out-of-phase twinklers. */
+  .starfield { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .starfield span {
+    position: absolute; top: 0; left: 0;
+    width: 1px; height: 1px; border-radius: 50%;
+    background: transparent;
   }
-  .ashfield span::before {
-    content: ""; display: block; width: 100%; height: 100%;
-    background: #9aa09e;
-    border-radius: 60% 40% 55% 45% / 50% 60% 40% 55%;
-    animation: flutter 3.4s ease-in-out infinite alternate;
+  .starfield .s1 {
+    opacity: 0.5;
+    box-shadow:
+      2vw 8vh #7d8b93, 7vw 31vh #7d8b93, 11vw 74vh #7d8b93, 15vw 15vh #7d8b93,
+      18vw 55vh #7d8b93, 22vw 88vh #7d8b93, 26vw 24vh #7d8b93, 29vw 66vh #7d8b93,
+      33vw 5vh #7d8b93, 36vw 43vh #7d8b93, 41vw 79vh #7d8b93, 44vw 18vh #7d8b93,
+      48vw 60vh #7d8b93, 52vw 9vh #7d8b93, 55vw 37vh #7d8b93, 58vw 84vh #7d8b93,
+      62vw 27vh #7d8b93, 66vw 70vh #7d8b93, 69vw 12vh #7d8b93, 73vw 49vh #7d8b93,
+      77vw 90vh #7d8b93, 81vw 33vh #7d8b93, 84vw 61vh #7d8b93, 88vw 20vh #7d8b93,
+      91vw 77vh #7d8b93, 95vw 45vh #7d8b93, 98vw 68vh #7d8b93, 4vw 50vh #7d8b93,
+      13vw 92vh #7d8b93, 24vw 40vh #7d8b93, 38vw 94vh #7d8b93, 50vw 75vh #7d8b93,
+      64vw 92vh #7d8b93, 76vw 6vh #7d8b93, 86vw 85vh #7d8b93, 96vw 14vh #7d8b93;
   }
-  .ashfield span:nth-child(2n)::before {
-    background: #7e8482;
-    border-radius: 45% 55% 40% 60% / 60% 45% 55% 40%;
-    animation-name: flutterB;
-    animation-duration: 4.6s;
+  .starfield .s2 {
+    width: 2px; height: 2px;
+    opacity: 0.6;
+    box-shadow:
+      9vw 22vh #c3ced4, 19vw 70vh #c3ced4, 31vw 12vh #c3ced4, 40vw 58vh #c3ced4,
+      54vw 25vh #c3ced4, 60vw 66vh #c3ced4, 71vw 39vh #c3ced4, 80vw 75vh #c3ced4,
+      90vw 30vh #c3ced4, 97vw 55vh #c3ced4, 6vw 63vh #c3ced4, 46vw 86vh #c3ced4,
+      68vw 5vh #c3ced4, 85vw 10vh #c3ced4;
   }
-  .ashfield span:nth-child(3n) { width: 3px; height: 4px; }
-  .ashfield span:nth-child(3n)::before { animation-duration: 2.8s; }
-  .ashfield span:nth-child(5n) { width: 2px; height: 3px; }
-  @keyframes flutter {
-    from { transform: translateX(-7px) rotate(-30deg); }
-    to   { transform: translateX(7px) rotate(150deg); }
+  .starfield .tw, .starfield .tw2 { width: 2px; height: 2px; }
+  .starfield .tw {
+    animation: twinkle 6.5s ease-in-out infinite alternate;
+    box-shadow: 16vw 35vh #d7e2e8, 57vw 48vh #d7e2e8, 88vw 52vh #d7e2e8, 27vw 78vh #d7e2e8;
   }
-  @keyframes flutterB {
-    from { transform: translateX(9px) rotate(20deg); }
-    to   { transform: translateX(-9px) rotate(-160deg); }
+  .starfield .tw2 {
+    animation: twinkle 9s ease-in-out -4s infinite alternate;
+    box-shadow: 35vw 22vh #d7e2e8, 74vw 18vh #d7e2e8, 63vw 80vh #d7e2e8;
   }
-  .ashfield span:nth-child(1)  { left: 8%;  animation-duration: 26s; animation-delay: 0s; }
-  .ashfield span:nth-child(2)  { left: 21%; animation-duration: 19s; animation-delay: 7s; }
-  .ashfield span:nth-child(3)  { left: 33%; animation-duration: 31s; animation-delay: 3s; }
-  .ashfield span:nth-child(4)  { left: 42%; animation-duration: 22s; animation-delay: 12s; }
-  .ashfield span:nth-child(5)  { left: 55%; animation-duration: 28s; animation-delay: 5s; }
-  .ashfield span:nth-child(6)  { left: 63%; animation-duration: 17s; animation-delay: 9s; }
-  .ashfield span:nth-child(7)  { left: 74%; animation-duration: 24s; animation-delay: 1s; }
-  .ashfield span:nth-child(8)  { left: 82%; animation-duration: 33s; animation-delay: 15s; }
-  .ashfield span:nth-child(9)  { left: 91%; animation-duration: 21s; animation-delay: 6s; }
-  .ashfield span:nth-child(10) { left: 48%; animation-duration: 35s; animation-delay: 18s; }
-  @keyframes fall {
-    0%   { transform: translateY(-2vh) translateX(0); opacity: 0; }
-    8%   { opacity: 0.5; }
-    85%  { opacity: 0.3; }
-    100% { transform: translateY(96vh) translateX(-4vw); opacity: 0; }
+  @keyframes twinkle {
+    from { opacity: 0.2; }
+    to   { opacity: 0.85; }
   }
   .eyebrow {
     font-family: var(--mono);
@@ -174,7 +169,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .telemetry::after, .registry-bar .alert { animation: none; }
-    .ashfield { display: none; }
+    .starfield .tw, .starfield .tw2 { animation: none; opacity: 0.6; }
   }
 
   /* ---- sections as ship's-document fields ---- */
@@ -301,9 +296,8 @@
 <body>
 
 <header>
-  <div class="ashfield" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
+  <div class="starfield" aria-hidden="true">
+    <span class="s1"></span><span class="s2"></span><span class="tw"></span><span class="tw2"></span>
   </div>
   <div class="wrap">
     <div class="eyebrow">Halvorsen-Erebus Logistics Ltd · Deep-Belt Mining Division</div>
