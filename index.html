@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vessel Proserpina</title>
 <meta name="description" content="A grimdark sci-fi mystery survival game. 2126. A mining vessel went dark mid drive-trial. The team sent to secure her went silent. You are the follow-up.">
+<meta property="og:title" content="Vessel Proserpina">
+<meta property="og:description" content="A grimdark sci-fi mystery survival game. 2126. A mining vessel went dark mid drive-trial. The team sent to secure her went silent. You are the follow-up.">
+<meta property="og:image" content="https://vesselproserpina.com/screenshots/hero_ship.jpg">
+<meta property="og:url" content="https://vesselproserpina.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   /* Palette: warm haunted-industrial blacks (Event Horizon murk), oxide = paint
      on the hull (headings, stencil, actions), phosphor = live console/CCTV data
@@ -59,54 +65,15 @@
     border-bottom: 1px solid var(--seam);
     background:
       radial-gradient(ellipse 130% 90% at 50% 50%, transparent 45%, rgba(0,0,0,0.55) 100%),
-      radial-gradient(ellipse 90% 60% at 50% 118%, #1c0f08 0%, transparent 62%),
+      linear-gradient(90deg, rgba(8, 8, 9, 0.5) 0%, transparent 55%),
+      radial-gradient(ellipse 90% 60% at 50% 118%, rgba(28, 15, 8, 0.55) 0%, transparent 62%),
+      url("screenshots/hero_ship.jpg") center / cover no-repeat,
       var(--hull);
     overflow: hidden;
   }
   header .wrap { position: relative; z-index: 2; }
-  /* starfield — the ship adrift in the deep belt. Three layers:
-     dim field, brighter scatter, and a few slow out-of-phase twinklers. */
-  .starfield { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-  .starfield span {
-    position: absolute; top: 0; left: 0;
-    width: 1px; height: 1px; border-radius: 50%;
-    background: transparent;
-  }
-  .starfield .s1 {
-    opacity: 0.5;
-    box-shadow:
-      2vw 8vh #7d8b93, 7vw 31vh #7d8b93, 11vw 74vh #7d8b93, 15vw 15vh #7d8b93,
-      18vw 55vh #7d8b93, 22vw 88vh #7d8b93, 26vw 24vh #7d8b93, 29vw 66vh #7d8b93,
-      33vw 5vh #7d8b93, 36vw 43vh #7d8b93, 41vw 79vh #7d8b93, 44vw 18vh #7d8b93,
-      48vw 60vh #7d8b93, 52vw 9vh #7d8b93, 55vw 37vh #7d8b93, 58vw 84vh #7d8b93,
-      62vw 27vh #7d8b93, 66vw 70vh #7d8b93, 69vw 12vh #7d8b93, 73vw 49vh #7d8b93,
-      77vw 90vh #7d8b93, 81vw 33vh #7d8b93, 84vw 61vh #7d8b93, 88vw 20vh #7d8b93,
-      91vw 77vh #7d8b93, 95vw 45vh #7d8b93, 98vw 68vh #7d8b93, 4vw 50vh #7d8b93,
-      13vw 92vh #7d8b93, 24vw 40vh #7d8b93, 38vw 94vh #7d8b93, 50vw 75vh #7d8b93,
-      64vw 92vh #7d8b93, 76vw 6vh #7d8b93, 86vw 85vh #7d8b93, 96vw 14vh #7d8b93;
-  }
-  .starfield .s2 {
-    width: 2px; height: 2px;
-    opacity: 0.6;
-    box-shadow:
-      9vw 22vh #c3ced4, 19vw 70vh #c3ced4, 31vw 12vh #c3ced4, 40vw 58vh #c3ced4,
-      54vw 25vh #c3ced4, 60vw 66vh #c3ced4, 71vw 39vh #c3ced4, 80vw 75vh #c3ced4,
-      90vw 30vh #c3ced4, 97vw 55vh #c3ced4, 6vw 63vh #c3ced4, 46vw 86vh #c3ced4,
-      68vw 5vh #c3ced4, 85vw 10vh #c3ced4;
-  }
-  .starfield .tw, .starfield .tw2 { width: 2px; height: 2px; }
-  .starfield .tw {
-    animation: twinkle 6.5s ease-in-out infinite alternate;
-    box-shadow: 16vw 35vh #d7e2e8, 57vw 48vh #d7e2e8, 88vw 52vh #d7e2e8, 27vw 78vh #d7e2e8;
-  }
-  .starfield .tw2 {
-    animation: twinkle 9s ease-in-out -4s infinite alternate;
-    box-shadow: 35vw 22vh #d7e2e8, 74vw 18vh #d7e2e8, 63vw 80vh #d7e2e8;
-  }
-  @keyframes twinkle {
-    from { opacity: 0.2; }
-    to   { opacity: 0.85; }
-  }
+  /* hero background is a real exterior of the Proserpina (screenshots/hero_ship.jpg);
+     the left scrim in the header background stack keeps the text legible over it. */
   .eyebrow {
     font-family: var(--mono);
     color: var(--dust);
@@ -169,7 +136,6 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .telemetry::after, .registry-bar .alert { animation: none; }
-    .starfield .tw, .starfield .tw2 { animation: none; opacity: 0.6; }
   }
 
   /* ---- sections as ship's-document fields ---- */
@@ -296,9 +262,6 @@
 <body>
 
 <header>
-  <div class="starfield" aria-hidden="true">
-    <span class="s1"></span><span class="s2"></span><span class="tw"></span><span class="tw2"></span>
-  </div>
   <div class="wrap">
     <div class="eyebrow">Halvorsen-Erebus Logistics Ltd · Deep-Belt Mining Division</div>
     <h1>Vessel<br><span class="ship">Proserpina</span></h1>
