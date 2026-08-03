@@ -208,10 +208,14 @@
     border: 1px solid var(--seam);
     display: block;
     cursor: zoom-in;
-    filter: saturate(0.72) contrast(1.06);
+    filter: saturate(0.85);
     transition: filter 0.25s;
   }
-  .cam:hover img { filter: saturate(0.95) contrast(1.06); }
+  .cam:hover img { filter: saturate(1); }
+  /* touch devices never fire the hover-lighten — serve feeds unfiltered */
+  @media (hover: none) {
+    .cam img { filter: none; }
+  }
   .cam img:focus-visible { outline: 2px solid var(--phosphor); outline-offset: 3px; }
   /* interlace scanlines over the feed */
   .cam::after {
