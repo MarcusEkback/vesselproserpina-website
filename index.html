@@ -20,8 +20,8 @@
     --dust: #6a706e;
     --oxide: #b5512c;
     --oxide-dim: #6f3a22;
-    --phosphor: #7fae88;
-    --phosphor-dim: #405847;
+    --phosphor: #7aa5bd;
+    --phosphor-dim: #3a5260;
     --blood: #9c2a1c;
     --display: "Arial Black", "Segoe UI Black", "Helvetica Neue", sans-serif;
     --mono: Consolas, "SF Mono", Menlo, monospace;
@@ -66,14 +66,36 @@
   header .wrap { position: relative; z-index: 2; }
   /* falling ash — sparse, slow, deniable */
   .ashfield { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  /* each flake: the span falls, its ::before sways and tumbles */
   .ashfield span {
     position: absolute; top: -2%;
-    width: 3px; height: 3px; border-radius: 50%;
-    background: #9a9f9b; opacity: 0;
+    width: 4px; height: 5px;
+    opacity: 0;
     animation: fall linear infinite;
   }
-  .ashfield span:nth-child(2n) { width: 4px; height: 4px; background: #848a85; }
-  .ashfield span:nth-child(5n) { width: 2px; height: 2px; }
+  .ashfield span::before {
+    content: ""; display: block; width: 100%; height: 100%;
+    background: #9aa09e;
+    border-radius: 60% 40% 55% 45% / 50% 60% 40% 55%;
+    animation: flutter 3.4s ease-in-out infinite alternate;
+  }
+  .ashfield span:nth-child(2n)::before {
+    background: #7e8482;
+    border-radius: 45% 55% 40% 60% / 60% 45% 55% 40%;
+    animation-name: flutterB;
+    animation-duration: 4.6s;
+  }
+  .ashfield span:nth-child(3n) { width: 3px; height: 4px; }
+  .ashfield span:nth-child(3n)::before { animation-duration: 2.8s; }
+  .ashfield span:nth-child(5n) { width: 2px; height: 3px; }
+  @keyframes flutter {
+    from { transform: translateX(-7px) rotate(-30deg); }
+    to   { transform: translateX(7px) rotate(150deg); }
+  }
+  @keyframes flutterB {
+    from { transform: translateX(9px) rotate(20deg); }
+    to   { transform: translateX(-9px) rotate(-160deg); }
+  }
   .ashfield span:nth-child(1)  { left: 8%;  animation-duration: 26s; animation-delay: 0s; }
   .ashfield span:nth-child(2)  { left: 21%; animation-duration: 19s; animation-delay: 7s; }
   .ashfield span:nth-child(3)  { left: 33%; animation-duration: 31s; animation-delay: 3s; }
@@ -88,7 +110,7 @@
     0%   { transform: translateY(-2vh) translateX(0); opacity: 0; }
     8%   { opacity: 0.5; }
     85%  { opacity: 0.3; }
-    100% { transform: translateY(96vh) translateX(-2.5vw); opacity: 0; }
+    100% { transform: translateY(96vh) translateX(-4vw); opacity: 0; }
   }
   .eyebrow {
     font-family: var(--mono);
