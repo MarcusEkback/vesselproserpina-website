@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vessel Proserpina</title>
+<meta name="description" content="A grimdark sci-fi mystery survival game. 2126. A mining vessel went dark mid drive-trial. The team sent to secure her went silent. You are the follow-up.">
+<style>
+  /* Palette: hull steel (blue-cast darks), oxide = paint on the hull
+     (headings, stencil, actions), phosphor = live console data ONLY.
+     Type: display = stencil/hull, mono = ship systems, sans = human voice. */
+  :root {
+    --hull: #0e1116;
+    --plate: #151920;
+    --seam: #272e38;
+    --ash: #b9bfc7;
+    --bone: #dde1e6;
+    --dust: #6d747e;
+    --oxide: #c05f35;
+    --oxide-dim: #7a4527;
+    --phosphor: #8fb7a1;
+    --display: "Arial Black", "Segoe UI Black", "Helvetica Neue", sans-serif;
+    --mono: Consolas, "SF Mono", Menlo, monospace;
+    --sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--hull);
+    color: var(--ash);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--oxide); outline-offset: 3px; }
+
+  /* ---- hero: the registry plate ---- */
+  header {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid var(--seam);
+    background:
+      radial-gradient(ellipse 100% 55% at 50% 115%, #171410 0%, transparent 65%),
+      var(--hull);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    color: var(--dust);
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(52px, 11vw, 118px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--bone);
+    text-transform: uppercase;
+  }
+  h1 .ship { color: var(--oxide); }
+  .registry-bar {
+    display: inline-block;
+    margin-top: 26px;
+    padding: 8px 18px;
+    border: 1px solid var(--oxide-dim);
+    border-left: 6px solid var(--oxide);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--oxide);
+  }
+  .tagline { margin-top: 30px; max-width: 540px; color: var(--dust); font-size: 16px; }
+  .hero-cta { margin-top: 40px; }
+
+  /* telemetry: phosphor is reserved for live ship data — nothing else uses it */
+  .telemetry {
+    margin-top: 64px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--phosphor);
+  }
+  .telemetry::after {
+    content: "▮";
+    margin-left: 6px;
+    animation: pulse 1.6s steps(2, start) infinite;
+  }
+  @keyframes pulse { to { visibility: hidden; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .telemetry::after { animation: none; }
+  }
+
+  /* ---- sections as ship's-document fields ---- */
+  section { border-bottom: 1px solid var(--seam); padding: 84px 0; }
+  .label {
+    font-family: var(--mono);
+    color: var(--oxide);
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .label::before { content: "// "; color: var(--oxide-dim); }
+  .premise p { max-width: 600px; margin-bottom: 1.15em; }
+  .premise .beat { color: var(--bone); }
+  .premise .last { font-family: var(--mono); color: var(--oxide); letter-spacing: 0.08em; }
+
+  /* ---- pillars ---- */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--seam);
+    border: 1px solid var(--seam);
+  }
+  .pillar { background: var(--plate); padding: 30px 26px; }
+  .pillar h3 {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    color: var(--bone);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .pillar h3::before { content: "▸ "; color: var(--oxide); }
+  .pillar p { font-size: 15px; color: var(--dust); }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 48px; font-family: var(--mono); }
+  .facts span { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dust); }
+  .facts span::before { content: "■ "; color: var(--oxide-dim); font-size: 9px; vertical-align: 2px; }
+
+  /* ---- media placeholders ---- */
+  .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .frame {
+    aspect-ratio: 16 / 9;
+    background: var(--plate);
+    border: 1px solid var(--seam);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    color: var(--dust);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .frame.wide { grid-column: 1 / -1; }
+  /* When real media lands: replace a .frame div with
+     <img src="..." alt="..."> or a <video> — styles below cover both. */
+  .media-grid img, .media-grid video { width: 100%; aspect-ratio: 16/9; object-fit: cover; border: 1px solid var(--seam); display: block; }
+
+  /* ---- follow ---- */
+  .btn {
+    display: inline-block;
+    padding: 15px 34px;
+    border: 1px solid var(--oxide);
+    color: var(--oxide);
+    background: none;
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn:hover { background: var(--oxide); color: var(--hull); }
+  .follow p { max-width: 560px; color: var(--dust); font-size: 15px; margin-bottom: 34px; }
+
+  /* ---- footer ---- */
+  footer {
+    padding: 48px 0 64px;
+    font-family: var(--mono);
+    color: #4a505a;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 2.2;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Halvorsen-Erebus Logistics Ltd · Deep-Belt Mining Division</div>
+    <h1>Vessel<br><span class="ship">Proserpina</span></h1>
+    <div class="registry-bar">HCV Proserpina · Registry 2666 · Status: No Contact</div>
+    <p class="tagline">A grimdark sci-fi mystery survival game. In development for PC.</p>
+    <div class="hero-cta">
+      <a class="btn" href="#follow">Follow the investigation</a>
+    </div>
+    <div class="telemetry">FLOW TELEMETRY // WATER DRAW, AFT SECTION: 2.1 L/DAY — SOURCE UNVERIFIED</div>
+  </div>
+</header>
+
+<section class="premise">
+  <div class="wrap">
+    <div class="label">Incident Brief</div>
+    <p><span class="beat">2126.</span> The first generation of experimental warp travel.</p>
+    <p>The deep-belt mining vessel <span class="beat">HCV Proserpina</span> went dark midway through a classified drive trial. Corporate dispatched a security team of eight to board her and secure the site.</p>
+    <p>Three days later, they went silent too.</p>
+    <p>You are the follow-up: a lone incident assessor, sent to a cold hull four hundred million kilometers from anywhere — to determine why the drive failed, and to find the missing men.</p>
+    <p><span class="beat">The ship still has power. Someone aft is still drawing water.</span></p>
+    <p><span class="last">START THERE.</span></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Operating Principles</div>
+    <div class="pillars">
+      <div class="pillar">
+        <h3>Investigate</h3>
+        <p>No objective markers. No minimap. Eighteen crew lived aboard this ship, and everything they left behind is evidence. The ship will tell you what happened — if you learn to read her.</p>
+      </div>
+      <div class="pillar">
+        <h3>Scavenge</h3>
+        <p>Every item aboard exists because someone, for some reason, left it there. Resources are scarce because the crew already used them. Every find is also a story.</p>
+      </div>
+      <div class="pillar">
+        <h3>Survive</h3>
+        <p>No combat system. Whatever is aboard cannot be fought — it can be understood, avoided, outmaneuvered. Sometimes.</p>
+      </div>
+    </div>
+    <div class="facts">
+      <span>First-person</span>
+      <span>Single location</span>
+      <span>Unreal Engine 5</span>
+      <span>Solo-developed</span>
+      <span>In early development</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Recovered Footage</div>
+    <div class="media-grid">
+      <!-- Trailer slot: replace with <video controls poster="..."> or a YouTube link card -->
+      <div class="frame wide">Transmission pending</div>
+      <!-- Screenshot slots: replace with <img src="screenshots/xx.jpg" alt="..."> -->
+      <div class="frame">Transmission pending</div>
+      <div class="frame">Transmission pending</div>
+      <div class="frame">Transmission pending</div>
+    </div>
+  </div>
+</section>
+
+<section class="follow" id="follow">
+  <div class="wrap">
+    <div class="label">Stay on Comms</div>
+    <p>Development is long-haul and documented as it happens — build footage, systems work, and the occasional thing that should not have gotten into the walls. If you want to watch a haunted ship get built, the channel below is live.</p>
+    <!-- TODO: real Discord invite URL -->
+    <a class="btn" href="#">Join the Discord</a>
+    <!-- Later: mailing list (Buttondown embed) + Steam wishlist button go here -->
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    HCV Proserpina · Registry 2666 · Operated under contract by Halvorsen-Erebus Logistics Ltd<br>
+    Vessel Proserpina © 2026 · An independent production · Contact: <!-- TODO: public-facing email --> pending
+  </div>
+</footer>
+
+</body>
+</html>
