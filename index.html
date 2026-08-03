@@ -158,6 +158,7 @@
   /* When real media lands: replace a .frame div with
      <img src="..." alt="..."> or a <video> — styles below cover both. */
   .media-grid img, .media-grid video { width: 100%; aspect-ratio: 16/9; object-fit: cover; border: 1px solid var(--seam); display: block; }
+  .media-grid img.wide { grid-column: 1 / -1; }
 
   /* ---- follow ---- */
   .btn {
@@ -247,12 +248,11 @@
   <div class="wrap">
     <div class="label">Recovered Footage</div>
     <div class="media-grid">
-      <!-- Trailer slot: replace with <video controls poster="..."> or a YouTube link card -->
-      <div class="frame wide">Transmission pending</div>
-      <!-- Screenshot slots: replace with <img src="screenshots/xx.jpg" alt="..."> -->
-      <div class="frame">Transmission pending</div>
-      <div class="frame">Transmission pending</div>
-      <div class="frame">Transmission pending</div>
+      <!-- Wide slot holds a screenshot until the trailer exists: swap for <video controls poster="..."> -->
+      <img class="wide" src="screenshots/catwalk.jpg" alt="A single powered compartment glowing across the dark sub-deck catwalks">
+      <img src="screenshots/core.jpg" alt="The Engineering Core monitoring station — screens still on, chair empty">
+      <img src="screenshots/crew.jpg" alt="A crew member at the service bay wall">
+      <img src="screenshots/shaft.jpg" alt="A red conduit descending into the lower-deck service shaft">
     </div>
   </div>
 </section>
