@@ -3,7 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vessel Proserpina</title>
+<title>Vessel Proserpina — a grimdark sci-fi mystery survival game</title>
+<link rel="canonical" href="https://vesselproserpina.com/">
+<link rel="icon" type="image/png" href="brand/icon_512.png">
+<link rel="apple-touch-icon" href="brand/icon_512.png">
+<link rel="preload" as="image" href="screenshots/hero_ship.jpg">
 <meta name="description" content="A grimdark sci-fi mystery survival game. 2126. A mining vessel went dark mid drive-trial. The team sent to secure her went silent. You are the follow-up.">
 <meta property="og:title" content="Vessel Proserpina">
 <meta property="og:description" content="A grimdark sci-fi mystery survival game. 2126. A mining vessel went dark mid drive-trial. The team sent to secure her went silent. You are the follow-up.">
@@ -11,6 +15,20 @@
 <meta property="og:url" content="https://vesselproserpina.com">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Vessel Proserpina",
+  "url": "https://vesselproserpina.com/",
+  "image": "https://vesselproserpina.com/screenshots/hero_ship.jpg",
+  "description": "A grimdark sci-fi mystery survival game. 2126. A mining vessel went dark mid drive-trial. The team sent to secure her went silent. You are the follow-up.",
+  "genre": ["Survival horror", "Mystery", "Science fiction"],
+  "gamePlatform": "PC",
+  "playMode": "SinglePlayer",
+  "applicationCategory": "Game"
+}
+</script>
 <style>
   /* Palette: warm haunted-industrial blacks (Event Horizon murk), oxide = paint
      on the hull (headings, stencil, actions), phosphor = live console/CCTV data
@@ -142,6 +160,7 @@
   section { border-bottom: 1px solid var(--seam); padding: 84px 0; }
   .label {
     font-family: var(--mono);
+    font-weight: 400;
     color: var(--phosphor);
     font-size: 12px;
     letter-spacing: 0.32em;
@@ -277,7 +296,7 @@
 
 <section class="premise">
   <div class="wrap">
-    <div class="label">Incident Brief</div>
+    <h2 class="label">Incident Brief</h2>
     <p><span class="beat">2126.</span> The first generation of experimental warp travel.</p>
     <p>The deep-belt mining vessel <span class="beat">HCV Proserpina</span> went dark midway through a classified drive trial. Corporate dispatched a security team of eight to board her and secure the site.</p>
     <p>Three days later, they went silent too.</p>
@@ -289,7 +308,7 @@
 
 <section>
   <div class="wrap">
-    <div class="label">Operating Principles</div>
+    <h2 class="label">Operating Principles</h2>
     <div class="pillars">
       <div class="pillar">
         <h3>Investigate</h3>
@@ -316,7 +335,7 @@
 
 <section>
   <div class="wrap">
-    <div class="label">Recovered Footage</div>
+    <h2 class="label">Recovered Footage</h2>
     <div class="media-grid">
       <!-- Wide slot holds a feed until the trailer exists: swap for <video controls poster="..."> -->
       <figure class="cam wide">
@@ -341,7 +360,7 @@
 
 <section class="follow" id="follow">
   <div class="wrap">
-    <div class="label">Stay on Comms</div>
+    <h2 class="label">Stay on Comms</h2>
     <p>Development is long-haul and documented as it happens — build footage, systems work, and the occasional thing that should not have gotten into the walls. If you want to watch a haunted ship get built, the channel below is live.</p>
     <a class="btn" href="https://discord.gg/6RfmFNdtHQ">Join the Discord</a>
     <!-- Later: mailing list (Buttondown embed) + Steam wishlist button go here -->
