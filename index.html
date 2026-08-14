@@ -214,6 +214,34 @@
   .facts span { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dust); }
   .facts span::before { content: "■ "; color: var(--oxide-dim); font-size: 9px; vertical-align: 2px; }
 
+  /* ---- public record: sixty years of clippings. Oxide, not phosphor —
+     this is old print, not live data. ---- */
+  .record { max-width: 640px; }
+  .record li {
+    list-style: none;
+    padding: 18px 0 18px 22px;
+    border-left: 1px solid var(--seam);
+    position: relative;
+  }
+  .record li::before {
+    content: "";
+    position: absolute; left: -4px; top: 27px;
+    width: 7px; height: 7px;
+    background: var(--oxide-dim);
+  }
+  .record .yr {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    color: var(--oxide);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .record p { font-size: 15px; color: var(--dust); }
+  .record .q { color: var(--ash); font-style: italic; }
+  .record .final p { color: var(--bone); }
+  .record .final::before { background: var(--blood); }
+
   /* ---- recovered footage: CCTV register ---- */
   .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
   .media-grid .wide { grid-column: 1 / -1; }
@@ -356,6 +384,50 @@
 
 <section>
   <div class="wrap">
+    <h2 class="label">Public Record</h2>
+    <ul class="record">
+      <li>
+        <span class="yr">2027</span>
+        <p>Third major mathematical conjecture closed by machine proof. The verification was also automated. <span class="q">"No single person can validate it end to end. That's what the verification systems are for."</span></p>
+      </li>
+      <li>
+        <span class="yr">2034</span>
+        <p>The Kyoto tapes: a practical superconductor family, found by a materials model at temperatures nobody predicted. <span class="q">"We've stopped asking why it works, and started asking how much."</span></p>
+      </li>
+      <li>
+        <span class="yr">2043</span>
+        <p>A certified autonomous unit runs eleven crew-years. The belt lines hire people. <span class="q">"Cheaper, insurable, and self-replacing."</span></p>
+      </li>
+      <li>
+        <span class="yr">2049</span>
+        <p>The Aldermont study closes after twelve years. Its subject: anomalous cognition. Its finding: effects <span class="q">"above chance, below use."</span> Funding not renewed.</p>
+      </li>
+      <li>
+        <span class="yr">2055</span>
+        <p>Result MR-55-0917 proves a traversable compact metric can exist. The certificate runs nine million lines. No human has completed review. The panel calls that <span class="q">"standard for the class."</span></p>
+      </li>
+      <li>
+        <span class="yr">2058</span>
+        <p>Keel laid: HCV Proserpina, deep-belt mining vessel. Nothing special.</p>
+      </li>
+      <li>
+        <span class="yr">2069</span>
+        <p>Deep-space medical certification adds a cognition-profile item. The form does not say what it screens for.</p>
+      </li>
+      <li>
+        <span class="yr">2082</span>
+        <p>Proserpina selected for systems modernization. Among the filings: a drive-systems integration, contractor unlisted. Eighteen berths posted. <span class="q">Queries are not encouraged.</span></p>
+      </li>
+      <li class="final">
+        <span class="yr">2086</span>
+        <p>Trial window opens. Last telemetry: July 9.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
     <h2 class="label">Recovered Footage</h2>
     <div class="media-grid">
       <!-- Wide slot holds a feed until the trailer exists: swap for <video controls poster="..."> -->
@@ -392,7 +464,8 @@
   <div class="wrap">
     HCV Proserpina · Registry 2666 · Operated under contract by Halvorsen-Erebus Logistics Ltd<br>
     Vessel Proserpina © 2026 · An independent production · <a href="mailto:contact@vesselproserpina.com">contact@vesselproserpina.com</a><br>
-    <span class="violation">Unauthorized access to incident materials constitutes a Class-C contractual violation · HEL-SEC/2666-A</span>
+    <span class="violation">Unauthorized access to incident materials constitutes a Class-C contractual violation · HEL-SEC/2666-A<br>
+    Benefit provisions per Schedule C apply to assessment personnel as to crew</span>
   </div>
 </footer>
 
